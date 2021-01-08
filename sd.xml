@@ -1,0 +1,9 @@
+<note>
+<to>Tove</to>
+<from>Jani</from>
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+</note>
+
+
+repository.create_file(path="sd.xml",message='Start tracking {!r}'.format("sd.xml"),content=contents)
