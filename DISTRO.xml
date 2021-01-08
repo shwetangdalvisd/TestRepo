@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="1" author="asingh">
+        <sql dbms="mysql" endDelimiter=";;" splitStatements="true" stripComments="false">
+
+            DROP TABLE IF EXISTS `ROLLBACK-DISTRO-4091-youtube_channel_video_status`;;
+
+            CREATE TABLE `ROLLBACK-DISTRO-4091-youtube_channel_video_status`
+            SELECT * FROM youtube_channel_video_status
+            WHERE youtube_video_id IN ('QLQRDqzUZO8', 'BIUecYaq-9Y', 'ZgrLnJyA3FM', 'KBPQKZ-_q4M', 'auJ-eMvXzo0', 'mkFWi5wzhkI', 'WcV4hUn4SCo', '5MNrlV2J0h0', 'fPMTaLnjPA8', 'AhXI1GRiULc', 'DmG65uVX_ZA', 'a7s7LriBTdU', 'w-idKZzowIs', 'MVjA_HGELA8', 'joCGyxFpKVQ', 'TCOlx5hN2UM', 'SCtpUr9mmGo', 'Arl3AKo6KVk', 'AOFxVW2adh4', '_-uZuf1KCHE', 'ZUnHP_dJ5_I', 'GWXPMGVRW30', 'Fck4RIOAoQY');;
+
+            DELETE yt.* FROM youtube_channel_video_status yt
+            INNER JOIN `ROLLBACK-DISTRO-4091-youtube_channel_video_status` rb ON rb.youtube_video_id = yt.youtube_video_id;;
+        </sql>
+        <rollback>
+            <sql dbms="mysql" endDelimiter=";;" splitStatements="true" stripComments="true">
+
+                INSERT INTO youtube_channel_video_status
+                SELECT * FROM `ROLLBACK-DISTRO-4091-youtube_channel_video_status`;;
+
+                DROP TABLE `ROLLBACK-DISTRO-4091-youtube_channel_video_status`;;
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
